@@ -1,0 +1,16 @@
+@use 'variables' as *;
+
+@mixin withBorder($color: $color-brand) {
+    border: 1px solid $color;
+}
+
+@mixin hoverableBorder($color: $color-brand) {
+    @include withBorder($color);
+    transition: box-shadow 0.3s ease;
+    box-shadow: none;
+
+    &:focus-visible, 
+    &:focus-withins {
+        box-shadow: 0 0 0 3px rgba($color, 0.2);
+    }
+}

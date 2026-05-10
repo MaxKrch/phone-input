@@ -1,0 +1,13 @@
+@use 'shared/styles/variables' as *;
+
+.icon {
+    &_red {
+        fill: $color-error;
+    }
+    &_green {
+        fill: $color-success;
+    }
+    &_gray {
+        fill: $color-accent;
+    }
+}

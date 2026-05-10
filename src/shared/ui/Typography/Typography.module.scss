@@ -1,0 +1,47 @@
+@use 'shared/styles/variables' as *;
+
+.typography {
+    &_s {
+        font-size: $font-size-s;
+    }
+    
+    &_m {
+        font-size: $font-size-m;
+    }
+
+    &_l {
+        font-size: $font-size-l;
+    }
+
+    &_regular {
+        font-weight: 400;
+    }
+
+    &_medium {
+        font-weight: 500;
+    }
+
+    &_semibold {
+        font-weight: 600;
+    }
+
+    &_inherit {
+        color: inherit;
+    }
+
+    &_primary {
+        color: $color-text;
+    }
+
+    &_secondary {
+        color: $color-text-secondary;
+    }
+
+    &_success {
+        color: $color-success;
+    }
+
+    &_error {
+        color: $color-error;
+    }
+}

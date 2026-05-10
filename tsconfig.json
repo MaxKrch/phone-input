@@ -11,10 +11,10 @@
         "ignoreDeprecations": "6.0",
         "baseUrl": ".",
         "paths": {
-            "@demo/*": ["./src/demo/*"],
-            "@components/*": ["./src/components/*"],
-            "@store/*": ["./src/store/*"],
-            "@shared/*": ["./src/shared/*"]
+            "demo/*": ["./src/demo/*"],
+            "features/*": ["./src/features/*"],
+            "store/*": ["./src/store/*"],
+            "shared/*": ["./src/shared/*"]
         }
     },
     "include": ["src/**/*.ts", "src/**/*.tsx"],

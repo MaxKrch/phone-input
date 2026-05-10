@@ -1,9 +1,12 @@
-import React from 'react';
+import PhoneInput from "features/PhoneInput"
+
+import styles from './App.module.scss';
 
 const App: React.FC = () => {
     return (
-        <div>
-            <h1>Hello World</h1>
+        <div className={styles['app']}>
+            <h1>Phone Input</h1>
+            <PhoneInput />
         </div>
     )
 }

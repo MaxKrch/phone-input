@@ -10,10 +10,10 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
         alias: {
-            '@demo': path.resolve(__dirname, './src/demo'),
-            '@components': path.resolve(__dirname, './src/components'),
-            '@store': path.resolve(__dirname, './src/store'),
-            '@shared': path.resolve(__dirname, './src/shared'),
+            'demo': path.resolve(__dirname, './src/demo'),
+            'features': path.resolve(__dirname, './src/features'),
+            'store': path.resolve(__dirname, './src/store'),
+            'shared': path.resolve(__dirname, './src/shared'),
         },
     },
     module: {
@@ -21,16 +21,34 @@ module.exports = {
             {
                 test: /\.[jt]sx?$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: [
-                            '@babel/preset-env',
-                            '@babel/preset-typescript',
-                            '@babel/preset-react'
-                          ],
+                use: 'babel-loader',
+            },
+            {
+                test: /\.module\.s[ac]ss$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: {
+                                namedExport: false,
+                                exportLocalsConvention: 'as-is',
+                            },
+                        },
                     },
-                },
+                    'postcss-loader',
+                    'sass-loader',
+                ],
+            },
+            {
+                test: /\.s[ac]ss$/,
+                exclude: /\.module\.s[ac]ss$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'postcss-loader',
+                    'sass-loader',
+                ],
             },
         ],
     },
