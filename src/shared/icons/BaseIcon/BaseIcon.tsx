@@ -18,7 +18,6 @@ const BaseIcon: React.FC<IconProps> = ({
 }) => {
     return (
         <svg 
-            {...rest}
             width={size}
             height={size}
             fill="none"
@@ -28,6 +27,7 @@ const BaseIcon: React.FC<IconProps> = ({
                 styles[`icon_${color}`],
                 className,
             )}
+            {...rest}
         >
             {children}
         </svg>

@@ -7,15 +7,21 @@ type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
     onChange?: (value: string) => void;
     placeholder?: string;
     className?: string;
+    center?: boolean;
+    isValid?: boolean;
+    isInvalid?: boolean;
 }
 
-const Input: React.FC<Props> = ({
+const Input = React.forwardRef<HTMLInputElement, Props>(({
     value,
     onChange,
     placeholder,
     className,
+    center,
+    isValid,
+    isInvalid,
     ...props
-}) => {
+}, ref) => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onChange?.(event.target.value);
     }
@@ -26,11 +32,18 @@ const Input: React.FC<Props> = ({
                 value={value}
                 onChange={handleChange}
                 placeholder={placeholder}
-                className={styles['input']}
+                className={clsx(
+                    styles['input'],
+                    center && styles['input_center'],
+                    isValid && styles['input_valid'],
+                    isInvalid && styles['input_invalid'],
+                )}
+                ref={ref}
                 {...props}
             />
         </div>
     )
-}
+});
 
+Input.displayName = 'Input';
 export default React.memo(Input);

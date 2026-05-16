@@ -1,2 +1,2 @@
-export * from './sanitizePhoneNumber';
 export * from './validatePhone';
+export * from './isDigit';

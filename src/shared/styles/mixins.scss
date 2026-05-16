@@ -1,16 +1,13 @@
 @use 'variables' as *;
 
-@mixin withBorder($color: $color-brand) {
+@mixin mainBorderStyle($color: $color-brand, $radius: 8px) {
     border: 1px solid $color;
+    border-radius: $radius;
 }
 
-@mixin hoverableBorder($color: $color-brand) {
-    @include withBorder($color);
-    transition: box-shadow 0.3s ease;
-    box-shadow: none;
-
+@mixin onFocus() {
     &:focus-visible, 
-    &:focus-withins {
-        box-shadow: 0 0 0 3px rgba($color, 0.2);
+    &:focus-within {
+        @content;
     }
 }

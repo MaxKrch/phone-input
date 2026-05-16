@@ -2,12 +2,12 @@
 
 .icon {
     &_red {
-        fill: $color-error;
+        color: $color-error;
     }
     &_green {
-        fill: $color-success;
+        color: $color-success;
     }
     &_gray {
-        fill: $color-accent;
+        color: $color-accent;
     }
 }

@@ -6,48 +6,87 @@ import { usePhoneInputStore } from 'store/PhoneInputStore';
 import { MASK_DIGIT_ALIAS } from 'shared/entities/countries';
 import Typography from 'shared/ui/Typography';
 
+import useKeyDownInput from './useKeyDownInput';
 import styles from './PhoneNumber.module.scss';
 
 type Props = {
     className?: string;
+    onValidationRequest?: () => void;
+    onValidationReset?: () => void;
+    showValidationStatus: boolean;
 }
 
 const PhoneNumber: React.FC<Props> = ({
     className,
+    onValidationRequest,
+    onValidationReset,
+    showValidationStatus,
 }) => {
     const store = usePhoneInputStore();
-    const handleChange = (value: string) => {
-        store.changePhoneNumber(value);
-    }
-    const phoneNumber = store.phoneNumber;
-    const maskArray = React.useMemo(
-        () => store.selectedCountry.mask.split(''), 
-        [store.selectedCountry]
-    );
-  
+
+    const { handleKeyDown } = useKeyDownInput({
+        store,
+        onPressEnter: onValidationRequest,
+        onChange: onValidationReset,
+    });
+
+    const digitSlotCount = store.digitSlotCount;
+
+    const inputRefMap = React.useMemo(() => {
+        const map = new Map<number, React.RefObject<HTMLInputElement | null>>();
+        for (let i = 0; i < digitSlotCount; i++) {
+            map.set(i, React.createRef<HTMLInputElement | null>());
+        }
+        return map;
+    }, [digitSlotCount]);
+
+    const focusSlotIndex = store.phoneInputIndex;
+    React.useLayoutEffect(() => {
+        if (focusSlotIndex === null) {
+            return;
+        }
+        inputRefMap.get(focusSlotIndex)?.current?.focus();
+    }, [focusSlotIndex, inputRefMap]);
+
+    const isValid = showValidationStatus && store.isValid;
+    const isInvalid = showValidationStatus && !store.isValid;
+
     return (
         <div className={clsx(styles['phone-number'], className)}>
-            {maskArray.map((el, index) => (
-                el === MASK_DIGIT_ALIAS ? (
-                    <Input 
-                        key={index} 
-                        value={phoneNumber[index] ?? ''} 
-                        onChange={handleChange} 
-                        placeholder={MASK_DIGIT_ALIAS}
-                        className={clsx(styles['phone-number__element'], styles['phone-number__input'])}
-                    />
-                ) : (
-                    <Typography 
-                        Element='span'
-                        key={index} 
-                        className={clsx(styles['phone-number__element'], styles['phone-number__span'])}
+            {store.maskArray.map((el, maskIndex) => {
+               
+                if (el === MASK_DIGIT_ALIAS) {
+                    const digit = store.getDigitByMaskIndex(maskIndex); 
+                    const inputIndex = store.getInputIndexByMaskIndex(maskIndex);
+                    if (inputIndex === null) {
+                        return null;
+                    }
+                    return (
+                        <Input
+                            key={`digit-${maskIndex}`}
+                            value={digit ?? ''}
+                            maxLength={1}
+                            className={styles['phone-number__input']}
+                            center
+                            onKeyDown={handleKeyDown(inputIndex)}
+                            ref={inputRefMap.get(inputIndex)}
+                            isValid={isValid}
+                            isInvalid={isInvalid}
+                        />
+                    );
+                }
+
+                return (
+                    <Typography
+                        Element="span"
+                        key={`mask-${maskIndex}`}
                     >
                         {el}
                     </Typography>
-                )
-            ))}
+                );
+            })}
         </div>
-    )
-}
+    );
+};
 
 export default observer(PhoneNumber);

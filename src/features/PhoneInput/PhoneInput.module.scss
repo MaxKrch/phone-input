@@ -1,5 +1,20 @@
 .phone-input {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
+    display: grid;
+    grid-template-areas: 
+        'country-field phone-number'
+        'validation-message validation-message';
+    grid-row-gap: 10px;
+    grid-column-gap: 8px;
+
+    &__country-field {
+        grid-area: country-field;
+    }
+
+    &__phone-number {
+        grid-area: phone-number;
+    }
+
+    &__validation-message {
+        grid-area: validation-message;
+    }
 }

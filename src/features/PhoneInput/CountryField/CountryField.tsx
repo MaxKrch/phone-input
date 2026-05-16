@@ -5,22 +5,29 @@ import styles from './CountryField.module.scss';
 import Input from 'shared/ui/Input';
 import { usePhoneInputStore } from 'store/PhoneInputStore';
 import { CountryKey } from 'shared/entities/countries';
+import { Text } from 'shared/entities/text';
+
+const CountrySelector = React.lazy(
+    () => import(/* webpackChunkName: "country-selector" */ './CountrySelector')
+);
 
 type Props = {
     onClick?: () => void;
     onChange?: (value: CountryKey) => void;
     className?: string;
+    showValidationStatus: boolean;
 }
 
 const CountryField: React.FC<Props> = ({
     onClick,
     onChange,
     className,
+    showValidationStatus,
 }) => {
     const store = usePhoneInputStore();
     const value = store.keySelectedCountry;
-    const placeholder = 'Select country';
-
+    const [showCountrySelector, setShowCountrySelector] = React.useState(false);
+    
     const handleChange = (value: string) => {
         if (!store.isValidCountryKey(value)) {
             return;
@@ -29,6 +36,9 @@ const CountryField: React.FC<Props> = ({
         onChange?.(value);
     }
     const icon = store.selectedCountry?.emoji;
+    const isValid = showValidationStatus && store.isValid;
+    const isInvalid = showValidationStatus && !store.isValid;
+    
     return (
         <div 
             className={clsx(
@@ -44,10 +54,13 @@ const CountryField: React.FC<Props> = ({
             <Input
                 value={value}
                 onChange={handleChange}
-                placeholder={placeholder}
+                placeholder={Text.countryField.placeholder()}
                 readOnly={!onChange}
                 className={styles['country-field-input']}
+                isValid={isValid}
+                isInvalid={isInvalid}
             />
+            {showCountrySelector && <CountrySelector />}
         </div>
     )
 }

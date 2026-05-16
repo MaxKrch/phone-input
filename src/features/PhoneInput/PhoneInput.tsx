@@ -1,26 +1,41 @@
 import React from 'react';
-import { PhoneInputProvider } from 'store/PhoneInputStore';
 
 import PhoneNumber from './PhoneNumber';
-import styles from './PhoneInput.module.scss';
 import CountryField from './CountryField';
-
-const CountrySelector = React.lazy(
-    () => import(/* webpackChunkName: "country-selector" */ './CountrySelector')
-);
+import ValidationMessage from './ValidationMessage';
+import styles from './PhoneInput.module.scss';
+import { usePhoneInputStore } from 'store/PhoneInputStore/usePhoneInputStore';
 
 const PhoneInput: React.FC = () => {
-    const [showCountrySelector, setShowCountrySelector] = React.useState(false);
+    const [showValidationStatus, setShowValidationMessageStatus] = React.useState(false);
+    const store = usePhoneInputStore();
+
+    const handleValidationRequest = React.useCallback(() => {
+        store.validate();
+        setShowValidationMessageStatus(true);
+    }, [store]);
+    
+    const handleValidationReset = React.useCallback(() => {
+        setShowValidationMessageStatus(false);
+    }, []);
+
     return (
-        <PhoneInputProvider>
-            <div className={styles['phone-input']}>
-                <CountryField />
-                <PhoneNumber />
-                {showCountrySelector && (
-                    <CountrySelector />
-                )}
-            </div>
-        </PhoneInputProvider>
+        <div className={styles['phone-input']}>
+            <CountryField 
+                className={styles['phone-input__country-field']}
+                showValidationStatus={showValidationStatus} 
+            />
+            <PhoneNumber 
+                className={styles['phone-input__phone-number']} 
+                onValidationRequest={handleValidationRequest} 
+                onValidationReset={handleValidationReset}
+                showValidationStatus={showValidationStatus}
+            />
+            <ValidationMessage 
+                className={styles['phone-input__validation-message']}
+                showValidationStatus={showValidationStatus} 
+            />
+        </div>
     )
 }
 
