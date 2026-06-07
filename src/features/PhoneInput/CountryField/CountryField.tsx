@@ -91,10 +91,15 @@ const CountryField: React.FC<Props> = ({
                     isValid={isValid}
                     isInvalid={isInvalid}
                     rightSlot={<ChevronIcon color={IconColor.gray} />}
+                    className={styles['country-field__input']}
                 />
             </div>
             {showCountrySelector &&
-                <React.Suspense fallback={<Loader />}>
+                <React.Suspense fallback={
+                 <div className={styles['country-field__loader']}>
+                    <Loader />
+                 </div>
+                }>
                     <CountrySelector
                         onClose={handleClose}
                         className={styles['country-field__country-selector']}
