@@ -4,63 +4,103 @@ import clsx from 'clsx';
 import styles from './CountryField.module.scss';
 import Input from 'shared/ui/Input';
 import { usePhoneInputStore } from 'store/PhoneInputStore';
-import { CountryKey } from 'shared/entities/countries';
 import { Text } from 'shared/entities/text';
+import { ChevronIcon } from 'shared/icons';
+import { IconColor } from 'shared/entities/icons';
+import Loader from 'shared/ui/Loader';
 
 const CountrySelector = React.lazy(
     () => import(/* webpackChunkName: "country-selector" */ './CountrySelector')
 );
 
 type Props = {
-    onClick?: () => void;
-    onChange?: (value: CountryKey) => void;
     className?: string;
     showValidationStatus: boolean;
 }
 
 const CountryField: React.FC<Props> = ({
-    onClick,
-    onChange,
     className,
     showValidationStatus,
 }) => {
     const store = usePhoneInputStore();
-    const value = store.keySelectedCountry;
+    const containerRef = React.useRef<HTMLDivElement>(null);
     const [showCountrySelector, setShowCountrySelector] = React.useState(false);
-    
-    const handleChange = (value: string) => {
+    const handleClick = React.useCallback(() => {
+        setShowCountrySelector(prev => !prev);
+    }, []);
+
+    const handleChange = React.useCallback((value: string) => {
         if (!store.isValidCountryKey(value)) {
             return;
         }
         store.changeKeySelectedCountry(value);
-        onChange?.(value);
-    }
-    const icon = store.selectedCountry?.emoji;
+    }, [store]);
+
+    const handleClose = React.useCallback(() => {
+        setShowCountrySelector(false);
+    }, []);
+
+    const handleClickOutside = React.useCallback((event: MouseEvent) => {
+        if (containerRef.current?.contains(event.target as Node)) {
+            return;
+        }
+        setShowCountrySelector(false);
+    }, []);
+
+    React.useEffect(() => {
+        if (!showCountrySelector) {
+            return;
+        }
+
+        document.addEventListener('pointerdown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('pointerdown', handleClickOutside);
+        };
+    }, [showCountrySelector, handleClickOutside]);
+
     const isValid = showValidationStatus && store.isValid;
     const isInvalid = showValidationStatus && !store.isValid;
     
+    const leftSlot = React.useMemo(() => {
+        return (
+            <span className={clsx(
+                "fi",
+                `fi-${store.keySelectedCountry}`,
+                styles['country-field__flag-icon']
+            )}
+            ></span>
+        )
+    }, [store.keySelectedCountry]);
+
     return (
         <div 
-            className={clsx(
-                styles['country-field'], 
-                !value && styles['country-field_placeholder'],
-                className
-            )}
-            onClick={onClick}
+            className={clsx(styles['country-field'], className)} 
+            ref={containerRef}
         >
-            <span className={styles['country-field-icon']}>
-                {icon}
-            </span>
-            <Input
-                value={value}
-                onChange={handleChange}
-                placeholder={Text.countryField.placeholder()}
-                readOnly={!onChange}
-                className={styles['country-field-input']}
-                isValid={isValid}
-                isInvalid={isInvalid}
-            />
-            {showCountrySelector && <CountrySelector />}
+            <div
+                className={styles['country-field__trigger']}
+                onClick={handleClick}
+            >
+                <Input
+                    value={store.selectedCountry.prefix}
+                    leftSlot={leftSlot}
+                    onChange={handleChange}
+                    placeholder={Text.countryField.placeholder()}
+                    readOnly
+                    isValid={isValid}
+                    isInvalid={isInvalid}
+                    rightSlot={<ChevronIcon color={IconColor.gray} />}
+                />
+            </div>
+            {showCountrySelector &&
+                <React.Suspense fallback={<Loader />}>
+                    <CountrySelector
+                        onClose={handleClose}
+                        className={styles['country-field__country-selector']}
+                    />
+                </React.Suspense>
+            }
         </div>
     )
 }

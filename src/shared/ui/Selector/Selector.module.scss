@@ -1,0 +1,7 @@
+@use 'shared/styles/mixins' as *;
+
+.selector {
+    height: 100%;
+    overflow: hidden auto;
+    @include mainScrollStyle();
+}

@@ -11,3 +11,14 @@
         @content;
     }
 }
+
+@mixin mainScrollStyle($color: $color-accent-secondary, $width: 4px) {
+    &::-webkit-scrollbar {
+        width: $width;
+        background: $color-bg;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $color;
+    }
+}

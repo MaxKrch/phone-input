@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
+    "flag-icons": "^7.5.0",
     "mobx": "^6.15.3",
     "mobx-react-lite": "^4.1.1",
     "react": "^19.2.5",

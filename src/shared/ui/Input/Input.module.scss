@@ -13,6 +13,32 @@
 
     @include mainBorderStyle($color-accent);
 
+    &__left-slot {
+        position: absolute;
+        left: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+    }
+
+    &__right-slot {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+    }
+
+    &_full-width {
+        width: 100%;
+    }
+
     &_valid {
         border-color: $color-success;
     }
@@ -30,4 +56,32 @@
     &_center {
         text-align: center;
     }
+
+    &_with-left-slot {
+        padding-left: 32px;
+    }
+
+    &_with-right-slot {
+        padding-right: 32px;
+    }
+
+    &_primary {
+        color: $color-text;
+    }
+
+    &_secondary {
+        color: $color-text-secondary;
+    }
+
+    &_success {
+        color: $color-success;
+    }
+
+    &_error {
+        color: $color-error;
+    }
+    }
+
+.input-container {
+    position: relative;
 }

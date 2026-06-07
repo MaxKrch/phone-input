@@ -1,0 +1,18 @@
+@use 'shared/styles/variables' as *;
+
+.option {
+    padding: 10px 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &:hover:not(&_selected) {
+        background-color: $color-brand-secondary;
+    }
+
+    &_selected {
+        background-color: $color-brand-secondary;
+        cursor: default;
+    }
+}

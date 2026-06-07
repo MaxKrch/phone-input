@@ -1,7 +1,7 @@
 import PhoneInput from "features/PhoneInput"
+import { PhoneInputProvider } from "store/PhoneInputStore";
 
 import styles from './App.module.scss';
-import { PhoneInputProvider } from "store/PhoneInputStore";
 
 const App: React.FC = () => {
     return (

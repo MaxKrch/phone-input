@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import styles from './Input.module.scss';
+import { TypographyColor } from 'shared/entities/typography';
 
 type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
     value: string;
@@ -10,6 +11,10 @@ type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
     center?: boolean;
     isValid?: boolean;
     isInvalid?: boolean;
+    fontColor?: TypographyColor
+    leftSlot?: React.ReactNode;
+    rightSlot?: React.ReactNode;
+    fullWidth?: boolean;
 }
 
 const Input = React.forwardRef<HTMLInputElement, Props>(({
@@ -20,6 +25,10 @@ const Input = React.forwardRef<HTMLInputElement, Props>(({
     center,
     isValid,
     isInvalid,
+    leftSlot,
+    fontColor = TypographyColor.inherit,
+    rightSlot,
+    fullWidth = false,
     ...props
 }, ref) => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +36,8 @@ const Input = React.forwardRef<HTMLInputElement, Props>(({
     }
     
     return (
-        <div className={clsx(styles['input-container'], className)}>
+        <div className={clsx(styles['input-container'])}>
+            {leftSlot && <div className={styles['input__left-slot']}>{leftSlot}</div>}
             <input
                 value={value}
                 onChange={handleChange}
@@ -37,10 +47,16 @@ const Input = React.forwardRef<HTMLInputElement, Props>(({
                     center && styles['input_center'],
                     isValid && styles['input_valid'],
                     isInvalid && styles['input_invalid'],
+                    leftSlot && styles['input_with-left-slot'],
+                    rightSlot && styles['input_with-right-slot'],
+                    fontColor !== TypographyColor.inherit && styles[`input_${fontColor}`],
+                    fullWidth && styles['input_full-width'],
+                    className
                 )}
                 ref={ref}
                 {...props}
             />
+            {rightSlot && <div className={styles['input__right-slot']}>{rightSlot}</div>}
         </div>
     )
 });

@@ -23,7 +23,7 @@ const useKeyDownInput = ({
         }
         store.addDigitToPhoneNumber(key, index);
         onChange?.();
-    }, [store]);
+    }, [store, onChange]);
     
     const isStartInputPosition = React.useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
         return event.currentTarget.selectionStart === 0;       
@@ -42,7 +42,7 @@ const useKeyDownInput = ({
                     isStartInputPosition(event) 
                         ? RemoveTarget.prev 
                         : RemoveTarget.this
-                    );
+                );
                 onChange?.();
                 break;
             }
@@ -66,16 +66,18 @@ const useKeyDownInput = ({
             }
 
             case 'ArrowLeft': {
-                if(isStartInputPosition(event)) {
+                
+                    event.preventDefault();
                     store.setPhoneInputIndex(index - 1);
-                }
+                
                 break;
             }
 
             case 'ArrowRight': {
-                if(isEndInputPosition(event)) {
+           
+                    event.preventDefault();
                     store.setPhoneInputIndex(index + 1);
-                }
+                
                 break;
             }
 

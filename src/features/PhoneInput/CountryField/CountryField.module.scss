@@ -1,0 +1,16 @@
+@use 'shared/styles/variables' as *;
+
+.country-field {
+    width: 96px;
+    position: relative;
+
+    &__trigger {
+        cursor: pointer;
+    }
+
+    &__flag-icon {
+        height: 14px;
+        width: 20px;
+        box-shadow: $light-shadow;
+    }
+}

@@ -1,0 +1,17 @@
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
+
+.country-selector {
+    position: absolute;
+    top: 44px;
+    left: 0;
+    width: 210px;
+    height: 220px;
+    padding: 10px 0;
+    background-color: $color-bg;
+    box-shadow: $light-shadow;
+    overflow: hidden;
+    z-index: 100;
+
+    @include mainBorderStyle($color-accent);
+}

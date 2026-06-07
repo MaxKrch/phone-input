@@ -41,12 +41,27 @@ const PhoneNumber: React.FC<Props> = ({
     }, [digitSlotCount]);
 
     const focusSlotIndex = store.phoneInputIndex;
+    const phoneDigitsKey = store.phoneNumberDigits.join('');
+
     React.useLayoutEffect(() => {
-        if (focusSlotIndex === null) {
+        const focusedByStore = focusSlotIndex !== null
+            ? inputRefMap.get(focusSlotIndex)?.current
+            : null;
+
+        if (focusedByStore) {
+            focusedByStore.focus();
+            focusedByStore.setSelectionRange(0, 0);
             return;
         }
-        inputRefMap.get(focusSlotIndex)?.current?.focus();
-    }, [focusSlotIndex, inputRefMap]);
+
+        for (const ref of inputRefMap.values()) {
+            const input = ref.current;
+            if (input && document.activeElement === input) {
+                input.setSelectionRange(0, 0);
+                return;
+            }
+        }
+    }, [focusSlotIndex, phoneDigitsKey, inputRefMap]);
 
     const isValid = showValidationStatus && store.isValid;
     const isInvalid = showValidationStatus && !store.isValid;
