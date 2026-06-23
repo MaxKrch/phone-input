@@ -6,6 +6,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './dist'),
         filename: '[name].bundle.js',
+        publicPath: process.env.PUBLIC_PATH || '/',
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
@@ -63,7 +64,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'Phone Input Demo App',
             filename: 'index.html',
-            template: path.resolve(__dirname, './src/demo/index.html')
+            template: path.resolve(__dirname, './src/demo/index.html'),
+            favicon: path.resolve(__dirname, './src/demo/assets/favicon.png'),
         }),
     ],
 }
