@@ -50,6 +50,13 @@ module.exports = {
                     'sass-loader',
                 ],
             },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif|ico)$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: '[name][ext]',
+                },
+            },
         ],
     },
     plugins: [
@@ -57,6 +64,7 @@ module.exports = {
             title: 'Phone Input Demo App',
             filename: 'index.html',
             template: path.resolve(__dirname, './src/demo/index.html'),
+            favicon: path.resolve(__dirname, './src/demo/assets/favicon.png'),
         }),
     ],
 }
