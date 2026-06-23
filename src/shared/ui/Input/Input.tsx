@@ -36,7 +36,10 @@ const Input = React.forwardRef<HTMLInputElement, Props>(({
     }
     
     return (
-        <div className={clsx(styles['input-container'])}>
+        <div className={clsx(
+            styles['input-container'], 
+            fullWidth && styles['input-container_full-width']
+        )}>
             {leftSlot && <div className={styles['input__left-slot']}>{leftSlot}</div>}
             <input
                 value={value}
@@ -49,8 +52,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(({
                     isInvalid && styles['input_invalid'],
                     leftSlot && styles['input_with-left-slot'],
                     rightSlot && styles['input_with-right-slot'],
-                    fontColor !== TypographyColor.inherit && styles[`input_${fontColor}`],
-                    fullWidth && styles['input_full-width'],
+                    styles[`input_${fontColor}`],
                     className
                 )}
                 ref={ref}

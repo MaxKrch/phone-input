@@ -35,10 +35,6 @@
         pointer-events: none;
     }
 
-    &_full-width {
-        width: 100%;
-    }
-
     &_valid {
         border-color: $color-success;
     }
@@ -64,6 +60,10 @@
     &_with-right-slot {
         padding-right: 32px;
     }
+    
+    &_inherit {
+        color: inherit;
+    }
 
     &_primary {
         color: $color-text;
@@ -80,8 +80,12 @@
     &_error {
         color: $color-error;
     }
-    }
+}
 
 .input-container {
     position: relative;
+
+    &_full-width {
+        width: 100%;
+    }
 }

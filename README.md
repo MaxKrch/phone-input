@@ -16,13 +16,18 @@ yarn install
 yarn start
 ```
 
-### Сборка проекта (Production)
+### Сборка проекта
 
 ```bash
 yarn build
 ```
 Проект собирается в директории /dist
----
+
+### Storybook
+Запуск storyybok:
+```bash
+yarn storybook
+```
 
 
 ## 🤖 Автоматизация (CI/CD)

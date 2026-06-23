@@ -1,17 +1,12 @@
 import React from 'react';
 import { IconColor, IconSize } from 'shared/entities/icons';
 
-import clsx from 'clsx';
-
 import BaseIcon from '../BaseIcon/BaseIcon';
 import { IconProps } from '../BaseIcon/BaseIcon';
-
-import styles from './LoaderIcon.module.scss';
 
 const LoaderIcon: React.FC<IconProps> = ({
     size = IconSize.sm,
     color = IconColor.brand,
-    className,
     ...rest
 }) => {
     const gradientId = React.useId();
@@ -21,7 +16,6 @@ const LoaderIcon: React.FC<IconProps> = ({
             size={size}
             color={color}
             viewBox="0 0 16 16"
-            className={clsx(styles['loader-icon'], className)}
             {...rest}
         >
             <defs>

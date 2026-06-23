@@ -4,4 +4,14 @@
     width: 100%;
     align-items: center;
     justify-content: center;
+
+    &__icon {
+        animation: loader-icon-spin 0.8s linear infinite;
+    }  
+}
+
+@keyframes loader-icon-spin {
+    to {
+        transform: rotate(360deg);
+    }
 }

@@ -1,9 +1,9 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import styles from './Typography.module.scss';
 import { TypographyColor, TypographySize, TypographyWeight } from 'shared/entities/typography';
 
-type Props = PropsWithChildren<{
+type Props = React.PropsWithChildren<{
     Element?: 'div' | 'span';
     size?: TypographySize;
     weight?: TypographyWeight;

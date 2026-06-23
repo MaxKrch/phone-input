@@ -1,3 +1,5 @@
+import React from 'react';
+
 import BaseIcon from "../BaseIcon/BaseIcon";
 import { IconColor, IconSize } from "shared/entities/icons";
 import { IconProps } from "../BaseIcon/BaseIcon";
