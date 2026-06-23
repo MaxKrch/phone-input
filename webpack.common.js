@@ -63,8 +63,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'Phone Input Demo App',
             filename: 'index.html',
-            template: path.resolve(__dirname, './src/demo/index.html'),
-            favicon: path.resolve(__dirname, './src/demo/assets/favicon.png'),
+            template: path.resolve(__dirname, './src/demo/index.html')
         }),
     ],
 }
