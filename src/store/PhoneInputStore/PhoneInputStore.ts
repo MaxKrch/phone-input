@@ -212,8 +212,7 @@ export default class PhoneInputStore {
             }
             return { 
                 kind: maskSegmentKind.char, 
-                maskIndex: 
-                index, 
+                maskIndex: index, 
                 value: char 
             };
         });

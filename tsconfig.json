@@ -10,6 +10,7 @@
         "skipLibCheck": true,
         "ignoreDeprecations": "6.0",
         "baseUrl": ".",
+        "types": ["jest", "@testing-library/jest-dom"],
         "paths": {
             "demo/*": ["./src/demo/*"],
             "features/*": ["./src/features/*"],
@@ -17,6 +18,6 @@
             "shared/*": ["./src/shared/*"]
         }
     },
-    "include": ["src/**/*.ts", "src/**/*.tsx"],
+    "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.test.ts", "src/**/*.test.tsx"],
     "exclude": ["node_modules"]
 }
